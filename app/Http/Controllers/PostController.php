@@ -14,6 +14,6 @@ class PostController extends Controller
         $post = Post::where([['id', '=', $request['post_id']],['published', '=', 1]])->get()->first();
         $post->load('author');
         Log::debug($post);
-        return view('Post', ['post' => $post]);
+        return view('post', ['post' => $post]);
     }
 }
