@@ -30,21 +30,95 @@
                     Contact Me
                 </b-navbar-item>
             </b-navbar-dropdown>
-            <a class="button is-light">
-                Log in
-            </a>
+            <div v-if="logged_in === '1'">
+                <form :action="logout_route" method="POST">
+                    <input type="hidden" name="_token" :value="csrf">
+                    <b-button type="is-primary" native-type="submit">Logout</b-button>
+                </form>
+            </div>
+            <div v-else>
+                <button class="button is-primary"
+                        @click="isComponentModalActive = true">
+                    Login
+                </button>
+
+                <b-modal :active.sync="isComponentModalActive"
+                         has-modal-card
+                         trap-focus
+                         :destroy-on-hide="false"
+                         aria-role="dialog"
+                         aria-modal>
+                    <modal-form v-bind="formProps"></modal-form>
+                </b-modal>
+            </div>
         </template>
     </b-navbar>
 </template>
 
 <script>
+    const ModalForm = {
+        props: ['email', 'password', 'login_route', 'csrf'],
+        template: `
+            <form :action="login_route" method="post">
+                <input type="hidden" name="_token" :value="csrf">
+                <div class="modal-card" style="width: auto">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">Login</p>
+                    </header>
+                    <section class="modal-card-body">
+                        <b-field label="Email">
+                            <b-input
+                                type="email"
+                                name="email"
+                                placeholder="Your email"
+                                required>
+                            </b-input>
+                        </b-field>
+
+                        <b-field label="Password">
+                            <b-input
+                                type="password"
+                                password-reveal
+                                name="password"
+                                placeholder="Your password"
+                                required>
+                            </b-input>
+                        </b-field>
+
+                    </section>
+                    <footer class="modal-card-foot">
+                        <button class="button" type="button" @click="$parent.close()">Close</button>
+                        <button class="button is-primary">Login</button>
+                    </footer>
+                </div>
+            </form>
+        `
+    }
+
     export default {
         name: "HeaderNavbar",
+        components: {
+            ModalForm
+        },
         props: {
             brand: String,
             index_route: String,
             home_route: String,
-            logged_in: [String, Number]
+            login_route: String,
+            logged_in: [String, Number],
+            logout_route: String,
+            csrf: String
+        },
+        data() {
+            return {
+                isComponentModalActive: false,
+                formProps: {
+                    email: this.email,
+                    password: this.password,
+                    login_route: this.login_route,
+                    csrf: this.csrf
+                }
+            }
         }
     }
 </script>

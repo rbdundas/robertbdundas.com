@@ -16,6 +16,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
 
+
 </head>
 <body>
     <div id="app">
@@ -23,7 +24,10 @@
             <header-navbar brand="{{ asset('img/boxers.png') }}"
                            home_route="{{ route('home') }}"
                            index_route="{{ route('index') }}"
-                           logged_in="{{ Auth::check() }}">
+                           login_route="{{ route('login') }}"
+                           logged_in="{{ Auth::check() }}"
+                           logout_route="{{ route('logout') }}"
+                           csrf="{{ csrf_token() }}">
             </header-navbar>
         </div>
         <main class="py-4">

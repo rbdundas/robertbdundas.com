@@ -1980,13 +1980,52 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var ModalForm = {
+  props: ['email', 'password', 'login_route', 'csrf'],
+  template: "\n        <form :action=\"login_route\" method=\"post\">\n            <input type=\"hidden\" name=\"_token\" :value=\"csrf\">\n            <div class=\"modal-card\" style=\"width: auto\">\n                <header class=\"modal-card-head\">\n                    <p class=\"modal-card-title\">Login</p>\n                </header>\n                <section class=\"modal-card-body\">\n                    <b-field label=\"Email\">\n                        <b-input\n                            type=\"email\"\n                            name=\"email\"\n                            placeholder=\"Your email\"\n                            required>\n                        </b-input>\n                    </b-field>\n\n                    <b-field label=\"Password\">\n                        <b-input\n                            type=\"password\"\n                            password-reveal\n                            name=\"password\"\n                            placeholder=\"Your password\"\n                            required>\n                        </b-input>\n                    </b-field>\n\n                </section>\n                <footer class=\"modal-card-foot\">\n                    <button class=\"button\" type=\"button\" @click=\"$parent.close()\">Close</button>\n                    <button class=\"button is-primary\">Login</button>\n                </footer>\n            </div>\n        </form>\n    "
+};
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "HeaderNavbar",
+  components: {
+    ModalForm: ModalForm
+  },
   props: {
     brand: String,
     index_route: String,
     home_route: String,
-    logged_in: [String, Number]
+    login_route: String,
+    logged_in: [String, Number],
+    logout_route: String,
+    csrf: String
+  },
+  data: function data() {
+    return {
+      isComponentModalActive: false,
+      formProps: {
+        email: this.email,
+        password: this.password,
+        login_route: this.login_route,
+        csrf: this.csrf
+      }
+    };
   }
 });
 
@@ -84175,9 +84214,72 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("a", { staticClass: "button is-light" }, [
-            _vm._v("\n            Log in\n        ")
-          ])
+          _vm.logged_in === "1"
+            ? _c("div", [
+                _c(
+                  "form",
+                  { attrs: { action: _vm.logout_route, method: "POST" } },
+                  [
+                    _c("input", {
+                      attrs: { type: "hidden", name: "_token" },
+                      domProps: { value: _vm.csrf }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "b-button",
+                      {
+                        attrs: { type: "is-primary", "native-type": "submit" }
+                      },
+                      [_vm._v("Logout")]
+                    )
+                  ],
+                  1
+                )
+              ])
+            : _c(
+                "div",
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button is-primary",
+                      on: {
+                        click: function($event) {
+                          _vm.isComponentModalActive = true
+                        }
+                      }
+                    },
+                    [_vm._v("\n                Login\n            ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-modal",
+                    {
+                      attrs: {
+                        active: _vm.isComponentModalActive,
+                        "has-modal-card": "",
+                        "trap-focus": "",
+                        "destroy-on-hide": false,
+                        "aria-role": "dialog",
+                        "aria-modal": ""
+                      },
+                      on: {
+                        "update:active": function($event) {
+                          _vm.isComponentModalActive = $event
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "modal-form",
+                        _vm._b({}, "modal-form", _vm.formProps, false)
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
         ],
         1
       )

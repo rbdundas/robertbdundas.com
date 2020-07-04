@@ -16,25 +16,25 @@ class Posts extends Migration
 
         Schema::create('post_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('category', 767);
+            $table->string('category');
             $table->timestamps();
         });
 
         Schema::create('post_tags', function (Blueprint $table) {
             $table->id();
-            $table->string('tag', 767);
+            $table->string('tag');
             $table->timestamps();
         });
 
         Schema::create('post_types', function (Blueprint $table) {
             $table->id();
-            $table->string('type', 767);
+            $table->string('type');
             $table->timestamps();
         });
 
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 767);
+            $table->string('title');
             $table->bigInteger('user_id')->unsigned()->index();
             $table->bigInteger('post_category_id')->unsigned()->index();
             $table->bigInteger('post_type_id')->unsigned()->index();

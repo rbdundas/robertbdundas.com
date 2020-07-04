@@ -2,29 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
-class HomeController extends Controller
+class NoAuthController extends BaseController
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function home(Request $request)
+    public function index(Request $request)
     {
         $articles = DB::table('posts')
             ->join('post_types', 'posts.post_type_id', '=', 'post_types.id')
@@ -40,6 +30,12 @@ class HomeController extends Controller
 
         Log::debug($articles);
         Log::debug($projects);
-        return view('home', ['projects'=> $projects, 'articles' => $articles]);
+        return view('welcome', ['projects'=> $projects, 'articles' => $articles]);
+    }
+
+    public function viewPost(Request $request)
+    {
+        $post = Post::where('id', '=', $request['id']);
+        return view('post', ['post' => $post]);
     }
 }
