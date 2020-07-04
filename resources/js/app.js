@@ -34,6 +34,7 @@ Vue.component('tile', require('./components/Tile.vue').default);
 Vue.component('home-view', require('./components/HomeView.vue').default);
 Vue.component('site-footer', require('./components/SiteFooter.vue').default);
 Vue.component('post', require('./components/Post.vue').default);
+Vue.component('edit-post', require('./components/EditPost.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

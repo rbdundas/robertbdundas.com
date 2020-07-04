@@ -35,14 +35,15 @@ class Posts extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->bigInteger('user_id')->unsigned()->index();
-            $table->bigInteger('post_category_id')->unsigned()->index();
-            $table->bigInteger('post_type_id')->unsigned()->index();
-            $table->bigInteger('post_tag_id')->unsigned()->index();
-            $table->text('summary');
+            $table->string('subtitle')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('post_category_id')->nullable();
+            $table->unsignedBigInteger('post_type_id')->nullable();
+            $table->unsignedBigInteger('post_tag_id')->nullable();
+            $table->text('summary')->nullable();
             $table->longText('article');
-            $table->boolean('published');
-            $table->timestamp('published_date');
+            $table->boolean('published')->default(false);
+            $table->timestamp('published_date')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('post_category_id')->references('id')->on('post_categories');

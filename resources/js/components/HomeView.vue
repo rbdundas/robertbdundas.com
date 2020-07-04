@@ -37,7 +37,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="tile is-child notification is-blue">
+                <div class="tile is-pink is-child notification">
                     <p class="title">Projects</p>
                     <div v-for="project in projects" :key="project.id">
                         <div class="is-half">

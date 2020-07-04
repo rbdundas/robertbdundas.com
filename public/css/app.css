@@ -11403,5 +11403,7 @@ http://zenorocha.mit-license.org
 .hljs-emphasis {
   font-style: italic;
 }
-
+.tile.is-pink {
+  background: #a4e86f;
+}
 
