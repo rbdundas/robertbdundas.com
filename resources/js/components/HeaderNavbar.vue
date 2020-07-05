@@ -20,10 +20,10 @@
                 Home
             </b-navbar-item>
             <b-navbar-dropdown label="Posts">
-                <b-navbar-item href="#">
+                <b-navbar-item :href="articles_route">
                     Articles
                 </b-navbar-item>
-                <b-navbar-item href="#">
+                <b-navbar-item :href="projects_route">
                     Projects
                 </b-navbar-item>
             </b-navbar-dropdown>
@@ -110,6 +110,8 @@
             index_route: String,
             home_route: String,
             login_route: String,
+            articles_route: String,
+            projects_route: String,
             logged_in: [String, Number],
             logout_route: String,
             csrf: String

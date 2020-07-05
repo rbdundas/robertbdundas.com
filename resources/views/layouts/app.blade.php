@@ -25,6 +25,8 @@
                            home_route="{{ route('home') }}"
                            index_route="{{ route('index') }}"
                            login_route="{{ route('login') }}"
+                           articles_route="{{ route('articles') }}"
+                           projects_route="{{ route('projects') }}"
                            logged_in="{{ Auth::check() }}"
                            logout_route="{{ route('logout') }}"
                            csrf="{{ csrf_token() }}">

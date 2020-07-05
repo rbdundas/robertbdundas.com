@@ -2043,6 +2043,8 @@ var ModalForm = {
     index_route: String,
     home_route: String,
     login_route: String,
+    articles_route: String,
+    projects_route: String,
     logged_in: [String, Number],
     logout_route: String,
     csrf: String
@@ -2071,6 +2073,7 @@ var ModalForm = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -84270,11 +84273,11 @@ var render = function() {
             "b-navbar-dropdown",
             { attrs: { label: "Posts" } },
             [
-              _c("b-navbar-item", { attrs: { href: "#" } }, [
+              _c("b-navbar-item", { attrs: { href: _vm.articles_route } }, [
                 _vm._v("\n                Articles\n            ")
               ]),
               _vm._v(" "),
-              _c("b-navbar-item", { attrs: { href: "#" } }, [
+              _c("b-navbar-item", { attrs: { href: _vm.projects_route } }, [
                 _vm._v("\n                Projects\n            ")
               ])
             ],
@@ -84567,6 +84570,10 @@ var staticRenderFns = [
             _vm._v(
               "\n                    I chose the Laravel/MySQL/Vue combination because I was comfortable with it to get something up and running fast,\n                    and I knew that my hosting provider could support my application very easily. It is a\n                    very simple, reliable, and extendable framework that uses the MVC model of which I am very accustomed. That said,\n                    I am hoping to build the site out to give more features and it won't be a single stack but a composite of many\n                    different technologies. I happen to like this stack because it can be supported by a very large development community, and even though I\n                    may be showcasing other technologies on this site, the core application is using what I consider to be\n                    a very robust standard in the industry.\n                "
             )
+          ]),
+          _vm._v(" "),
+          _c("a", { attrs: { href: "git_history.txt" } }, [
+            _vm._v("View Git history")
           ])
         ])
       ])

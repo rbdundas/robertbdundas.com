@@ -89,6 +89,7 @@
                         may be showcasing other technologies on this site, the core application is using what I consider to be
                         a very robust standard in the industry.
                     </p>
+                    <a href="git_history.txt">View Git history</a>
                 </div>
             </div>
         </div>

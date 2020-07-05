@@ -23,6 +23,7 @@ Route::get('/projects', 'PostController@projects')->name('projects');
 Route::prefix('post')->group(function () {
     Route::get('/view', 'PostController@viewPost')->name('post.view');
     Route::get('/edit', 'PostController@editPost')->name('post.edit');
+    Route::get('/new', 'PostController@editPost')->name('post.new');
     Route::post('/save', 'PostController@savePost')->name('post.save');
 });
 
