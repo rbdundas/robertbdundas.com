@@ -16,7 +16,7 @@
                             <b-input maxlength="200" name="summary" type="textarea" :value="post.summary"></b-input>
                         </b-field>
                         <b-field label="Post">
-                            <b-input maxlength="1000" type="textarea" name="article" :value="post.article"></b-input>
+                            <b-input maxlength="20000" type="textarea" name="article" :value="post.article"></b-input>
                         </b-field>
                         <b-button type="is-primary" native-type="submit">Save</b-button>
                     </form>

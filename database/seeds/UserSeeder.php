@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
             'name' => 'rbdundas',
             'email' => 'rbdundas@gmail.com',
             'password' => Hash::make('#S3pt3mb3r2002?'),
-            'role_id' => 4
+            'role_id' => 3
         ]);
     }
 }

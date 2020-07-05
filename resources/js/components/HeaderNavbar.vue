@@ -19,9 +19,14 @@
             <b-navbar-item v-else :href="index_route">
                 Home
             </b-navbar-item>
-            <b-navbar-item href="#">
-                Section
-            </b-navbar-item>
+            <b-navbar-dropdown label="Posts">
+                <b-navbar-item href="#">
+                    Articles
+                </b-navbar-item>
+                <b-navbar-item href="#">
+                    Projects
+                </b-navbar-item>
+            </b-navbar-dropdown>
             <b-navbar-dropdown label="Info">
                 <b-navbar-item href="#">
                     About Me

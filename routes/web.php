@@ -17,6 +17,8 @@ Auth::routes();
 
 Route::get('/', 'NoAuthController@index')->name('index');
 Route::get('/home', 'HomeController@home')->name('home');
+Route::get('/articles', 'PostController@listArticles')->name('articles');
+Route::get('/projects', 'PostController@projects')->name('projects');
 
 Route::prefix('post')->group(function () {
     Route::get('/view', 'PostController@viewPost')->name('post.view');

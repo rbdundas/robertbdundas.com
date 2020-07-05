@@ -22,7 +22,8 @@
     export default {
         name: "Post",
         props: {
-            'post': Object
+            'post': Object,
+            'edit_post': Boolean
         },
         methods: {
             formatDate(inDate) {

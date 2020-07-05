@@ -14,9 +14,7 @@
                         </div>
                     @endif
 
-                    @can('isSuperAdmin')
-                        You're a SuperAdmin!
-                    @elsecan('isAdmin')
+                    @can('isAdmin')
                         You're an admin!
                     @elsecan('isUser')
                         You're a User!

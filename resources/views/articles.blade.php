@@ -1,29 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
+    <list-articles :articles="{{ json_encode($articles) }}"
+                   view_post_route="{{ route('post.view') }}"
+                   edit_post_route="{{ route('post.edit') }}"
+                   @can('isAdmin') is_admin="true" @else is_admin="false" @endcan>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    @can('isAdmin')
-                        You're an admin!
-                    @elsecan('isUser')
-                        You're a User!
-                    @else
-                        You're a Guest!
-                    @endcan
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    </list-articles>
 @endsection

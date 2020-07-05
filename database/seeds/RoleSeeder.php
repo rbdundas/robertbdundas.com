@@ -23,9 +23,5 @@ class RoleSeeder extends Seeder
             'name' => 'Admin',
             'description' => 'Authenticated administrator'
         ]);
-        DB::table('roles')->insert([
-            'name' => 'SuperAdmin',
-            'description' => 'Authenticated Administrator that can assign admin role'
-        ]);
     }
 }
