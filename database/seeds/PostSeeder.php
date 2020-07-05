@@ -54,7 +54,7 @@ class PostSeeder extends Seeder
             'tag' => 'insuretech'
         ]);
         DB::table('posts')->insert([
-            'title' => 'Getting Frameworks (Laravel) Up and Running for Server Hosting.',
+            'title' => 'Getting Frameworks (Laravel) Up and Running for Server Hosting',
             'user_id' => 1,
             'subtitle' => 'How to configure a local development environment with remote server hosting',
             'summary' => 'This article will detail the steps that I take to complete development on my local Windows 10 computer, push the code to the code repository, and deploy the code on the hosting provider\'s server.',

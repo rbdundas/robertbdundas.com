@@ -32,8 +32,7 @@
                     <p class="title">Articles</p>
                     <div v-for="article in articles" :key="article.id">
                         <p class="content">
-                            <a :href="constructRoute(viewpostroute, article.id)">{{ article.title }}</a> -
-                            <i>Published on: </i>{{ formatDate(article.published_date) }}
+                            <a :href="constructRoute(viewpostroute, article.id)">{{ article.title }}</a> - {{ formatDate(article.published_date) }}
                         </p>
                     </div>
                 </div>
@@ -42,7 +41,7 @@
                     <div v-for="project in projects" :key="project.id">
                         <div class="is-half">
                             <a :href="constructRoute(viewpostroute, project.id)">{{ project.title }}</a> -
-                            <i>Published on: </i>{{ formatDate(project.published_date) }}
+                            {{ formatDate(project.published_date) }}
                         </div>
                     </div>
                 </div>

@@ -2159,7 +2159,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "HomeView",
   props: {
@@ -84406,10 +84405,9 @@ var render = function() {
                     },
                     [_vm._v(_vm._s(article.title))]
                   ),
-                  _vm._v(" -\n                        "),
-                  _c("i", [_vm._v("Published on: ")]),
                   _vm._v(
-                    _vm._s(_vm.formatDate(article.published_date)) +
+                    " - " +
+                      _vm._s(_vm.formatDate(article.published_date)) +
                       "\n                    "
                   )
                 ])
@@ -84437,10 +84435,9 @@ var render = function() {
                     },
                     [_vm._v(_vm._s(project.title))]
                   ),
-                  _vm._v(" -\n                        "),
-                  _c("i", [_vm._v("Published on: ")]),
                   _vm._v(
-                    _vm._s(_vm.formatDate(project.published_date)) +
+                    " -\n                        " +
+                      _vm._s(_vm.formatDate(project.published_date)) +
                       "\n                    "
                   )
                 ])
