@@ -80,6 +80,15 @@
                         features and/or components. Where possible, features in this site/application will have a corresponding
                         how-to article for it.
                     </p>
+                    <p class="content">
+                        I chose the Laravel/MySQL/Vue combination because I was comfortable with it to get something up and running fast,
+                        and I knew that my hosting provider could support my application very easily. It is a
+                        very simple, reliable, and extendable framework that uses the MVC model of which I am very accustomed. That said,
+                        I am hoping to build the site out to give more features and it won't be a single stack but a composite of many
+                        different technologies. I happen to like this stack because it can be supported by a very large development community, and even though I
+                        may be showcasing other technologies on this site, the core application is using what I consider to be
+                        a very robust standard in the industry.
+                    </p>
                 </div>
             </div>
         </div>

@@ -2159,6 +2159,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "HomeView",
   props: {
@@ -84551,6 +84560,12 @@ var staticRenderFns = [
           _c("p", { staticClass: "content" }, [
             _vm._v(
               "\n                    This site was built using Laravel (PHP 7.4) and MySQL for the back-end. The\n                    front-end is primarily Vue.js integrated with the Laravel Blade templates, and some of the components\n                    use Buefy (a Vue.js component library). The entire site is styled with Bulma CSS, a very easy to\n                    use CSS library. The appearance of 'hodge-podge' is intentional to provide examples of each of the\n                    features and/or components. Where possible, features in this site/application will have a corresponding\n                    how-to article for it.\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "content" }, [
+            _vm._v(
+              "\n                    I chose the Laravel/MySQL/Vue combination because I was comfortable with it to get something up and running fast,\n                    and I knew that my hosting provider could support my application very easily. It is a\n                    very simple, reliable, and extendable framework that uses the MVC model of which I am very accustomed. That said,\n                    I am hoping to build the site out to give more features and it won't be a single stack but a composite of many\n                    different technologies. I happen to like this stack because it can be supported by a very large development community, and even though I\n                    may be showcasing other technologies on this site, the core application is using what I consider to be\n                    a very robust standard in the industry.\n                "
             )
           ])
         ])
