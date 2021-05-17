@@ -6,8 +6,11 @@
                     <h1 class="title">
                         {{ post.title }}
                     </h1>
-                    <h2 class="subtitle">
+                    <h2 class="subtitle" v-if="post.published === 1">
                         Published on {{ formatDate(post.published_date) }} by <a :href="'mailto:'+post.author.email">{{ post.author.name }}</a>
+                    </h2>
+                    <h2 class="subtitle" v-else>
+                        NOT PUBLISHED by <a :href="'mailto:'+post.author.email">{{ post.author.name }}</a>
                     </h2>
                     <span v-html="post.article"></span>
                 </div>

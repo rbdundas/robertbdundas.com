@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 use App\Post;
 
@@ -27,9 +28,26 @@ class PostController extends Controller
         return view('articles', ['articles' => $articles]);
     }
 
+    public function listProjects(Request $request)
+    {
+        $projects = DB::table('posts')
+            ->join('post_types', 'posts.post_type_id', '=', 'post_types.id')
+            ->join('post_categories', 'posts.post_category_id', '=', 'post_categories.id')
+            ->join('post_tags', 'posts.post_tag_id', '=', 'post_tags.id')
+            ->join('users', 'posts.user_id', '=', 'users.id')
+            ->where('post_types.type', '=', 'project')
+            ->select('posts.*', 'post_types.type', 'post_tags.tag', 'post_categories.category', 'users.name', 'users.email')
+            ->orderByRaw('posts.id DESC')
+            ->get();
+
+        Log::debug($projects);
+        return view('projects', ['projects' => $projects]);
+    }
+
     public function viewPost(Request $request)
     {
-        $post = Post::where([['id', '=', $request['post_id']],['published', '=', 1]])->get()->first();
+
+        $post = Post::where([['id', '=', $request['post_id']]])->get()->first();
         $post->load('author');
 
         Log::debug($post);
@@ -82,8 +100,57 @@ class PostController extends Controller
         }
         return redirect()->route('post.view', [
             'post_id' => $post['id'],
-            'alert' => $alert]
+            'alert' => $alert
+            ]
         );
 
+    }
+    public function publishPost(Request $request)
+    {
+        if ($request['post_id']) {
+            $post = Post::where('id', '=', $request['post_id'])->get()->first();
+        }
+
+        $today = date('Y-m-d H:i:s');
+
+        if (Gate::allows('update-post', $post)) {
+            $post['published'] = true;
+            $post['published_date'] = $today;
+            $post->save();
+            $alert['type'] = 'success';
+            $alert['message'] = 'The post was published.';
+        } else {
+            $alert['type'] = 'danger';
+            $alert['message'] = 'You do not have sufficient privileges to perform this action.';
+        }
+        return redirect()->route('post.view', [
+                'post_id' => $post['id'],
+                'alert' => $alert
+            ]
+        );
+    }
+    public function unpublishPost(Request $request)
+    {
+        if ($request['post_id']) {
+            $post = Post::where('id', '=', $request['post_id'])->get()->first();
+        }
+
+        $today = date('Y-m-d H:i:s');
+
+        if (Gate::allows('update-post', $post)) {
+            $post['published'] = false;
+            $post['published_date'] = $today;
+            $post->save();
+            $alert['type'] = 'success';
+            $alert['message'] = 'The post was unpublished.';
+        } else {
+            $alert['type'] = 'danger';
+            $alert['message'] = 'You do not have sufficient privileges to perform this action.';
+        }
+        return redirect()->route('post.view', [
+                'post_id' => $post['id'],
+                'alert' => $alert
+            ]
+        );
     }
 }

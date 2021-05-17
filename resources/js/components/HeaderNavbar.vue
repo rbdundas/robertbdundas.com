@@ -13,7 +13,7 @@
             <b-navbar-item :href="'https://twitter.com/rbdundas'"><i class="fab fa-twitter is-primary"></i></b-navbar-item>
             <b-navbar-item :href="'https://github.com/rbdundas'"><i class="fab fa-github is-primary"></i></b-navbar-item>
             <b-navbar-item :href="'https://medium.com/@rbdundas'"><i class="fab fa-medium is-primary"></i></b-navbar-item>
-            <b-navbar-item v-if="logged_in === 1" :href="home_route">
+            <b-navbar-item v-if="logged_in === '1'" :href="home_route">
                 Home
             </b-navbar-item>
             <b-navbar-item v-else :href="index_route">

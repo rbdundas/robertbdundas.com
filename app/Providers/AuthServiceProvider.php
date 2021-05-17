@@ -37,5 +37,6 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('update-post', 'App\Policies\PostPolicy@update');
+        Gate::define('publish-post', 'App\Policies\PostPolicy@update');
     }
 }

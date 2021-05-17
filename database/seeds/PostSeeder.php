@@ -59,7 +59,7 @@ class PostSeeder extends Seeder
             'subtitle' => 'How to configure a local development environment with remote server hosting',
             'summary' => 'This article will detail the steps that I take to complete development on my local Windows 10 computer, push the code to the code repository, and deploy the code on the hosting provider\'s server.',
             'article' => '
-                <p class="py-3">The Larvel documentation is very good, so for anything Laravel related, I suggest starting with the docs. This guide will explain how to complete all of your development locally, push the code to the code control repository (I use GitHub), and then deploy the code out on the hosting server (I use A2Hosting.com). I believe the importance of this step is overlooked and also performed incorrectly by a lot of developers. If you aren\'t committing after every feature change, there\'s an issue. If you are pushing your entire application stack to the repo, there\'s an issue. I have seen enough developers with packages checked in, entire node_modules directories and a number of other issues that make synchronization a problem that I thought it would be good to write a guide. Also, I want a resource for developers that I hire to use and standardize the process that I would like for them to follow.</p>
+                <p class="py-3">The Laravel documentation is very good, so for anything Laravel related, I suggest starting with the docs. This guide will explain how to complete all of your development locally, push the code to the code control repository (I use GitHub), and then deploy the code out on the hosting server (I use A2Hosting.com). I believe the importance of this step is overlooked and also performed incorrectly by a lot of developers. If you aren\'t committing after every feature change, there\'s an issue. If you are pushing your entire application stack to the repo, there\'s an issue. I have seen enough developers with packages checked in, entire node_modules directories and a number of other issues that make synchronization a problem that I thought it would be good to write a guide. Also, I want a resource for developers that I hire to use and standardize the process that I would like for them to follow.</p>
 
 <p class="py-3">You\'ll notice that I don\'t like to add a lot of extra steps in anything I write, because I usually have a point to make and I don\'t want to waste time getting to that point. So, you\'ll see that I have intentionally left steps out of these guides for the sole purpose of getting to the point. For many of these steps, there are plenty of resources with either the documentation or other guides that do a better job of explaining than I do. So, I will typically skip the extra junk to get to the point, make the point and then end...no waste :) </p>
 
@@ -155,7 +155,7 @@ php artisan migrate
                 Here is some code:<br/>
                 <pre v-highlightjs class="box px-0 py-0"><code class="javascript solarized-dark">const s = new Date().toString()</code></pre>
                 And, here is an image: <br/>
-                <img src="img/ziggy.jpg">
+                <img src="/img/ziggy.jpg">
                 ',
             'published' => true,
             'published_date' => '2020-06-28',

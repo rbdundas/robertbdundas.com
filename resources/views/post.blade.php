@@ -24,6 +24,11 @@
                 <div class="columns is-centered">
                     <div class="column is-two-thirds">
                         <a href="{{ route('post.edit', ['post_id' => $post['id']]) }}" class="button is-primary">Edit</a>
+                        @if($post['published'] == false)
+                            <a href="{{ route('post.publish', ['post_id' => $post['id']]) }}" class="button is-primary">Publish</a>
+                        @else
+                            <a href="{{ route('post.unpublish', ['post_id' => $post['id']]) }}" class="button is-primary">Unpublish</a>
+                        @endif
                     </div>
                 </div>
             </div>

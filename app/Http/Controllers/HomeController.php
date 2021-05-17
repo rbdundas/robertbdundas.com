@@ -40,6 +40,6 @@ class HomeController extends Controller
 
         Log::debug($articles);
         Log::debug($projects);
-        return view('home', ['projects'=> $projects, 'articles' => $articles]);
+        return view('welcome', ['projects'=> $projects, 'articles' => $articles]);
     }
 }

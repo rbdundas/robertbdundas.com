@@ -28,12 +28,14 @@
         </div>
         <div class="tile is-ancestor">
             <div class="tile is-vertical is-parent">
-                <div class="tile is-child  notification is-warning">
-                    <p class="title">Articles</p>
+                <div class="tile is-child notification is-warning">
+                    <p class="title"><a :href="list_articles_route" class="pr-5">Articles</a></p>
                     <div v-for="article in articles" :key="article.id">
-                        <p class="content">
-                            <a :href="constructRoute(viewpostroute, article.id)">{{ article.title }}</a> - {{ formatDate(article.published_date) }}
-                        </p>
+                        <div v-if="article.published === 1">
+                            <p class="content">
+                                <a :href="constructRoute(viewpostroute, article.id)">{{ article.title }}</a> - {{ formatDate(article.published_date) }}
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div class="tile is-pink is-child notification">
@@ -103,15 +105,21 @@
             image: String,
             articles: Array,
             projects: Array,
-            viewpostroute: String
+            viewpostroute: String,
+            list_articles_route: String,
+            logged_in: [String, Number]
         },
         methods: {
             constructRoute(route, key) {
                 return route + '?post_id=' + key;
             },
             formatDate(inDate) {
-                let newDate =  inDate.split(' ')[0].split('-');
+              if (inDate !== null) {
+                let newDate = inDate.split(' ')[0].split('-');
                 return newDate[1] + "." + newDate[2] + "." + newDate[0]
+              } else {
+                return ""
+              }
             }
         }
     }
