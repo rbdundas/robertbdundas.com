@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PostSeeder extends Seeder
 {
@@ -147,6 +148,196 @@ php artisan migrate
             'post_tag_id' => 1
         ]);
         DB::table('posts')->insert([
+            'title' => 'Agency Automation: Screen Scraping for Documents Using Python and BeautifulSoup',
+            'user_id' => 1,
+            'subtitle' => 'HOW TO login to a carrier website to find and download policy documents automatically',
+            'summary' => 'This article will illustrate how to use Python and BeautifulSoup to login to a website, dynamically build a list of files, then download those attachments to a local repository.',
+            'article' => '<img src="/img/AgencyAutomation/ScreenScraping/ScreenScrapingTitle.png" alt-"Python Plus Beautiful Soup Equals Agency Automation" class="image is-centered"/>
+<br/>
+<p>The insurance CSR (Client Service Representative, aka Account Manager) or their administrative assistants are responsible for downloading a number of documents related to an account. These include everything from estimates, inspection reports, policy information and a number of other documents. If we can write a utility that will log into a carrier’s website, retrieve those documents and upload those to our agency management system, then we have saved the CSR a chunk of time that can be spent better servicing their customers or growing the book of business.
+In this article, I will walk through a very basic example using an existing carrier website (or any website) for the purpose of downloading policy documents using Python.</p>
+<br/>
+<p>In this first example, I have selected a website where the authentication is very simple. There are no cookies, no modern or strange authentication mechanisms. This site looks to be built in the early 2000’s and has remained relatively unchanged since. Why fix what isn’t broke, right?</p>
+<br/>
+<p>Please note, that this is for educational purposes only. I’ll be redacting anything that can identify the site and/or its contents.</p>
+<br/>
+<p>That said, let’s get into it…</p>
+<br/>
+<p>Before starting, you’ll need to install BeautifulSoup:</p><br/>
+<pre v-highlightjs class="py-0 px-0"><code class="command solarized-dark">pip install BeautifulSoup</code></pre>
+<br/><p>Once installed, set up a code block for scraping a website. You only need the urllib for fetching a site, but I will be using the others soon enough:</p>
+<br/>
+<pre v-highlightjs class="py-0 px-0"><code class="command solarized-dark">import re
+from urllib import parse, request
+from bs4 import BeautifulSoup</code></pre>
+<br/>
+<p>Let’s start with writing a method to retrieve the login page for the site. This will not be used in the final code (we won’t need to GET the login but POST the login to the next step for authentication):</p>
+<br/>
+<pre v-highlightjs class="py-0 px-0"><code class="command solarized-dark">scrapeurl = "https://thesitewewanttoscrape.com"
+def get_login():
+    req = request.Request(url=scrapeurl)
+    with request.urlopen(req) as f:
+        print(f.read())</code></pre>
+<br/>
+<p>After running this in the IDE, we get an HTML returned document:</p>
+<br/>
+<img src="/img/AgencyAutomation/ScreenScraping/screenshot1.png" alt="Console screenshot 1" class="image is-horizontal-center"/>
+<br/>
+<p>We’re off to a good start…</p>
+<br/>
+<p>Next, we need to take a look a the website and see what is being used to login. So, using Chrome, open the developer tools and click the Network tab to view the information being sent to and from the website during login (I have redacted source information from the screenshots).</p>
+<br/>
+<p>What you should note is that the Network tab, when opened fresh, will be empty. Once you log into the site, the Network tab will capture the data sent to and from the server:</p>
+<br/>
+<img src="/img/AgencyAutomation/ScreenScraping/screenshot2.png" alt="Console screenshot 2" class="image is-horizontal-center"/>
+<br/>
+<p>After login, you’ll see everything retrieved and sent by the browser:</p>
+<br/>
+<img src="/img/AgencyAutomation/ScreenScraping/screenshot3.png" alt="Console screenshot 3" class="image is-horizontal-center"/>
+<br/>
+<p>Then, by clicking on the call that actually sent the login form to the server, look for the Header that included POST in the Request Method. In this case, it is Route.htm.</p>
+<br/>
+<img src="/img/AgencyAutomation/ScreenScraping/screenshot4.png" alt="Console screenshot 4" class="image is-horizontal-center"/>
+<br/>
+<p>Scrolling down on that tab, you should see the data that was posted to the server:
+Notice that it is NOT “username” and “password”. There’s a lot more to this form that we need to note in our code. I have changed the actual field names to XXX. To login successfully, we’ll need to pass the exact same information to the server.</p>
+<br/>
+<img src="/img/AgencyAutomation/ScreenScraping/screenshot5.png" alt="Console screenshot 5" class="image is-horizontal-center"/>
+<br/>
+<p>In our code, we’ll want to create a Python dictionary defining each of those form elements as Keys with their respective values.</p>
+<br/>
+<pre v-highlightjs class="py-0 px-0"><code class="command solarized-dark">form = {
+    \'XXX-ID\': \'theusername\',
+    \'XXX-PWD\': \'xxxxxxxxxxx\',
+    \'Submit\': \'Enter\',
+    \'AgZip1\': \'\',
+    \'AgNum\': \'\',
+    \'XxxPgm\': \'Login\'
+}</code></pre>
+<br/>
+<p>Now, we need to encode the values from the Python dictionary to something a webserver will understand (I have seen this written a couple of different ways, but this works for this site):</p>
+<br/>
+<pre v-highlightjs class="py-0 px-0"><code class="command solarized-dark">data = parse.urlencode(form).encode(\'ascii\')</code></pre>
+<br/>
+<p>Now, using the Request URL taken from the Chrome Network tab in the above screenshot (redacted), we can post the login to that webpage:</p>
+<br/>
+<pre v-highlightjs class="py-0 px-0"><code class="command solarized-dark">req = request.Request(url=scrapeurl, data=data, method=\'POST\')</code></pre>
+<br/>
+<p>Lastly, we want to see the results, so let’s just stream it to the console for now:</p>
+<br/>
+
+<pre v-highlightjs class="py-0 px-0"><code class="command solarized-dark">with request.urlopen(req) as f:
+    print(f.read())</code></pre>
+<br/>
+<p>Putting it altogether, the entire method looks like the following:</p>
+<br/>
+<pre v-highlightjs class="py-0 px-0"><code class="command solarized-dark">def post_login():
+
+    form = {
+        \'XXX-ID\': \'username\',
+        \'XXX-PWD\': \'xxxxxxxx\',
+        \'Submit\': \'Enter\',
+        \'AgZip1\': \'\',
+        \'AgNum\': \'\',
+        \'XxxPgm\': \'Login\'
+    }
+
+    data = parse.urlencode(form).encode(\'ascii\')
+
+    req = request.Request(url=scrapeurl, data=data, method=\'POST\')
+    with request.urlopen(req) as f:
+        print(f.read())</code></pre>
+<br/>
+<p>That was easy! Running it in the IDE gives us a hot mess, but it’s the website results that we want (redacted):</p>
+<br/>
+<img src="/img/AgencyAutomation/ScreenScraping/screenshot6.png" alt="Console screenshot 6" class="image is-horizontal-center"/>
+<br/>
+<p>Now, to make it pretty, or in this case, “Beautiful” (nudge-nudge-wink-wink), we sprinkle in some BeautifulSoup magic:</p>
+<br/>
+<p>Change the print(f.read()) line to</p>
+<br/>
+<pre v-highlightjs class="py-0 px-0"><code class="command solarized-dark">soup = BeautifulSoup(f.read(), \'html.parser\')
+print(soup.prettify())</code></pre>
+<br/>
+<p>Viola! We are now loading the page after login, and it is readable.</p>
+<br/>
+<img src="/img/AgencyAutomation/ScreenScraping/screenshot7.png" alt="Console screenshot 7" class="image is-horizontal-center"/>
+<br/>
+<p>What we need to do now is figure out which policies we want to retrieve from our script. In this case, I’ll be looking for a status called “Bound”.</p>
+<br/>
+<p>To do this, we need to use BeautifulSoup to parse the HTML document, look for any string that matches the word “Bound”, then go back four cells (TD tags) to get the ID of the input tab before it (see above screenshot with the red boxes). This will be the ID that we need to pass to retrieve the policy docs in a later step. So, after we’ve made our soup, use a regular expression to search for the matching Bound string using BeautifulSoup’s findAll method as follows. This loosely translates to “Look for all of the td tags that have the word Bound’ as text between the tags”.</p>
+<br/>
+<pre v-highlightjs class="py-0 px-0"><code class="command solarized-dark">search_tags = soup.findAll(\'td\', text=re.compile(\'Bound\'))
+    print(search_tags)</code></pre>
+<br/>
+<img src="/img/AgencyAutomation/ScreenScraping/screenshot8.png" alt="Console screenshot 8" class="image is-horizontal-center"/>
+<br/>
+<p>Now, we need it to traverse up to the parent, then find the first input to retrieve our id value. Replace the print command with a new print command that will find the first input tag of the parent tag of the Bound tag, and return the ID attribute…that’s a lot!</p>
+<br/>
+<pre v-highlightjs class="py-0 px-0"><code class="command solarized-dark">print(each.parent.find(\'input\').attrs[\'id\'])</code></pre>
+<br/>
+<img src="/img/AgencyAutomation/ScreenScraping/screenshot9.png" alt="Console screenshot 9" class="image is-horizontal-center"/>
+<br/>
+<p>Perfect! Now we have the ID used to retrieve the policy documents from another area of the site. We need to capture these ID tags as a n array, then iterate through them. For each ID, we’ll construct a filename, get the filename from the server, download the policy document to our local computer, and name it something meaningful to the file system.</p>
+<br/>
+<p>After looking through the site using the Chrome debug tools, I found that the documents are retrieved using a jQuery ajax call:</p>
+<br/>
+<img src="/img/AgencyAutomation/ScreenScraping/screenshot10.png" alt="Console screenshot 10" class="image is-horizontal-center"/>
+<br/>
+<img src="/img/AgencyAutomation/ScreenScraping/screenshot11.png" alt="Console screenshot 11" class="image is-horizontal-center"/>
+<br/>
+<p>So, all we need to do is construct a filename that matches the name passed from JavaScript (for Policy Documents, it is “P”+ID+”.pdf”) to the appropriate directory/URL in the ajax function, which is just “/agency/” from the application root. If we write a binary file matching the same name, we should be able to capture the file using just urllib.
+I wrote a new method that will call the URL, get the file, then save the file to a PDF directory:</p>
+<br/>
+
+<pre v-highlightjs class="py-0 px-0"><code class="command solarized-dark">def get_file(filename):
+    fileurl = \'https://sitethatwearescraping.com/agency/\'+filename
+    req = request.Request(url=fileurl)
+    file = open(\'pdf/\' + filename, \'wb\')
+    with request.urlopen(req) as f:
+        file.write(f.read())
+    file.close()</code></pre>
+<br/>
+<p>In this code, I define the new file URL. Create a new, binary file of the same name. As the program reads the file from the server, it is writing the file to a pdf directory, and, finally, closing the file.
+    I’ll test with one of the IDs from the prior call:</p>
+<br/>
+<img src="/img/AgencyAutomation/ScreenScraping/screenshot13.png" alt="Console screenshot 13" class="image is-horizontal-center"/>
+<br/>
+<p>You can see that the pdf directory now has a new P458198.pdf, which I confirm is the Policy Document that I wanted to fetch from the server.</p>
+<br/>
+<p>The last thing to do would be to loop through the results of the ID fetch method, construct a filename, then call get_file(filename) for each of the IDs in that list.</p>
+<br/>
+<p>Go back to that print(each.parent.find(‘input’).attrs[‘id’]) line and replace with the following:</p>
+<br/>
+<pre v-highlightjs class="py-0 px-0"><code class="command solarized-dark">for each in soup.findAll(‘td’, text=re.compile(‘Bound’)):
+        filename = ‘P’ + each.parent.find(‘input’).attrs[‘id’] + ‘.pdf’
+    get_file(filename)</code></pre>
+<br/>
+<p>Instead of printing the ID for the line, this will build a filename and then call the get_file method, which will write to the filesystem.</p>
+<br/>
+<p>After a quick run, we can see the files populating in the pdf directory (note that I changed the openurl to open a local copy of the HTML to save time):</p>
+<br/>
+<img src="/img/AgencyAutomation/ScreenScraping/screenshot14.png" alt="Console screenshot 14" class="image is-horizontal-center"/>
+<br/>
+<p>And there you have it! A basic screen scraper that will login, fetch a list of id fields, build a filename dynamically, then fetch the filename from the remote server.</p>
+<br/>
+<p>Instead of an Admin or CSR clicking through each policy and downloading the policy documents from the site each day, this can be run for a given day and all of the files saved automatically to a local computer.</p>
+<br/>
+<p>The next steps would be to put meaningful information into the filename (i.e. like the customer name and date), then, connect to the Agency Management System and automatically upload the document to the client account. But one step at a time. For now, I am happy that the resource will have everything downloaded automatically for them.
+                                                                                                                                                                                                                                                                                                                                              This was a fun project that will save the agency anywhere from one to ten hours depending on the volume of documents to retrieve, and, this is one of the most mundane tasks there is.</p>
+<br/>
+<p>Here, the point is to take a manual job and automate, thus saving the resource, who would normally be clicking and downloading, can now be used to do something more meaningful and more enjoyable. This article is not intended to perform any malicious or nefarious task. Quite the opposite, it is meant to add value to the company.</p>
+<br/>
+<p>Let me know your thoughts or opinions in the comments.</p>
+<br/>
+<p>Happy coding!</p>',
+            'published' => true,
+            'published_date' => '2021-06-22',
+            'post_category_id' => 2,
+            'post_type_id' => 2,
+            'post_tag_id' => 1
+        ]);
+        DB::table('posts')->insert([
             'title' => 'Dummy Project',
             'user_id' => 1,
             'summary' => 'This is a summary of the project.',
@@ -155,7 +346,7 @@ php artisan migrate
                 Here is some code:<br/>
                 <pre v-highlightjs class="box px-0 py-0"><code class="javascript solarized-dark">const s = new Date().toString()</code></pre>
                 And, here is an image: <br/>
-                <img src="/img/ziggy.jpg">
+                <img src="/img/ziggy.jpg" alt="Image of Ziggy the Boxer">
                 ',
             'published' => true,
             'published_date' => '2020-06-28',
