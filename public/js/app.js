@@ -2209,30 +2209,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "HomeView",
   props: {
     image: String,
     articles: Array,
     projects: Array,
+    wp_articles: Array,
     viewpostroute: String,
+    wppostroute: String,
     list_articles_route: String,
     logged_in: [String, Number]
   },
   methods: {
     constructRoute: function constructRoute(route, key) {
       return route + '?post_id=' + key;
+    },
+    constructWPRoute: function constructWPRoute(route, key) {
+      return route + '/' + key;
     },
     formatDate: function formatDate(inDate) {
       if (inDate !== null) {
@@ -84578,67 +84572,30 @@ var render = function() {
             _c("p", { staticClass: "title" }, [
               _c(
                 "a",
-                {
-                  staticClass: "pr-5",
-                  attrs: { href: _vm.list_articles_route }
-                },
+                { staticClass: "pr-5", attrs: { href: _vm.wppostroute } },
                 [_vm._v("Articles")]
               )
             ]),
             _vm._v(" "),
-            _vm._l(_vm.articles, function(article) {
-              return _c("div", { key: article.id }, [
-                article.published === 1
-                  ? _c("div", [
-                      _c("p", { staticClass: "content" }, [
-                        _c(
-                          "a",
-                          {
-                            attrs: {
-                              href: _vm.constructRoute(
-                                _vm.viewpostroute,
-                                article.id
-                              )
-                            }
-                          },
-                          [_vm._v(_vm._s(article.title))]
-                        ),
-                        _vm._v(
-                          " - " +
-                            _vm._s(_vm.formatDate(article.published_date)) +
-                            "\n                        "
-                        )
-                      ])
-                    ])
-                  : _vm._e()
-              ])
-            })
-          ],
-          2
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "tile is-pink is-child notification" },
-          [
-            _c("p", { staticClass: "title" }, [_vm._v("Projects")]),
-            _vm._v(" "),
-            _vm._l(_vm.projects, function(project) {
-              return _c("div", { key: project.id }, [
+            _vm._l(_vm.wp_articles, function(wp) {
+              return _c("div", { key: wp.id }, [
                 _c("div", { staticClass: "is-half" }, [
                   _c(
                     "a",
                     {
                       attrs: {
-                        href: _vm.constructRoute(_vm.viewpostroute, project.id)
+                        href: _vm.constructWPRoute(
+                          _vm.wppostroute,
+                          wp.post_name
+                        )
                       }
                     },
-                    [_vm._v(_vm._s(project.title))]
+                    [_vm._v(_vm._s(wp.post_title))]
                   ),
                   _vm._v(
-                    " -\n                        " +
-                      _vm._s(_vm.formatDate(project.published_date)) +
-                      "\n                    "
+                    " - " +
+                      _vm._s(wp.post_date.split(" ")[0]) +
+                      "\n                  "
                   )
                 ])
               ])

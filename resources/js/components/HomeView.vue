@@ -29,23 +29,12 @@
         <div class="tile is-ancestor">
             <div class="tile is-vertical is-parent">
                 <div class="tile is-child notification is-warning">
-                    <p class="title"><a :href="list_articles_route" class="pr-5">Articles</a></p>
-                    <div v-for="article in articles" :key="article.id">
-                        <div v-if="article.published === 1">
-                            <p class="content">
-                                <a :href="constructRoute(viewpostroute, article.id)">{{ article.title }}</a> - {{ formatDate(article.published_date) }}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="tile is-pink is-child notification">
-                    <p class="title">Projects</p>
-                    <div v-for="project in projects" :key="project.id">
-                        <div class="is-half">
-                            <a :href="constructRoute(viewpostroute, project.id)">{{ project.title }}</a> -
-                            {{ formatDate(project.published_date) }}
-                        </div>
-                    </div>
+                  <p class="title"><a :href="wppostroute" class="pr-5">Articles</a></p>
+                  <div v-for="wp in wp_articles" :key="wp.id">
+                      <div class="is-half">
+                        <a :href="constructWPRoute(wppostroute, wp.post_name)">{{ wp.post_title }}</a> - {{ wp.post_date.split(' ')[0] }}
+                      </div>
+                  </div>
                 </div>
             </div>
             <div class="tile is-half is-parent">
@@ -105,13 +94,18 @@
             image: String,
             articles: Array,
             projects: Array,
+            wp_articles: Array,
             viewpostroute: String,
+            wppostroute: String,
             list_articles_route: String,
             logged_in: [String, Number]
         },
         methods: {
             constructRoute(route, key) {
                 return route + '?post_id=' + key;
+            },
+            constructWPRoute(route, key) {
+                return route + '/' + key;
             },
             formatDate(inDate) {
               if (inDate !== null) {

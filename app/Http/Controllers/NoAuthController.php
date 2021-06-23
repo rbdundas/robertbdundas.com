@@ -28,9 +28,21 @@ class NoAuthController extends BaseController
             ->select('posts.*', 'post_types.type')
             ->get();
 
-        Log::debug($articles);
-        Log::debug($projects);
-        return view('welcome', ['projects'=> $projects, 'articles' => $articles]);
+        $wp_articles = DB::connection('wp')
+            ->table("wpnt_posts")
+            ->join('wpnt_postmeta', 'wpnt_posts.ID', '=',  'wpnt_postmeta.post_id')
+            ->select('wpnt_posts.*')
+            ->distinct()
+            ->where('wpnt_posts.post_status', '=', 'publish')
+            ->where('wpnt_posts.post_type', '=', 'post')
+            ->where('wpnt_posts.post_date', '<', NOW())
+            ->orderBy('wpnt_posts.post_date', 'desc')
+            ->get();
+
+        //Log::debug($articles);
+        //Log::debug($projects);
+        Log::debug($wp_articles);
+        return view('welcome', ['projects'=> $projects, 'articles' => $articles, 'wp_articles' => $wp_articles]);
     }
 
     public function viewPost(Request $request)

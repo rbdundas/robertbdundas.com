@@ -323,6 +323,7 @@ html {
   -webkit-text-size-adjust: 100%;
      -moz-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
+          text-size-adjust: 100%;
 }
 
 article,
@@ -346,7 +347,7 @@ textarea {
 code,
 pre {
   -moz-osx-font-smoothing: auto;
-  -webkit-font-smoothing: inherit;
+  -webkit-font-smoothing: auto;
   font-family: monospace;
 }
 
@@ -11406,8 +11407,3 @@ http://zenorocha.mit-license.org
   background: #a4e86f;
 }
 
-.is-horizontal-center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}

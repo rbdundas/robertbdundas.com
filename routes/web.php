@@ -20,6 +20,12 @@ Route::get('/home', 'HomeController@home')->name('home');
 Route::get('/articles', 'PostController@listArticles')->name('articles');
 Route::get('/projects', 'PostController@listProjects')->name('projects');
 
+Route::group([
+    "domain" => "https://robertbdundas.com"
+], function () {
+    Route::get("/wp")->name("wp");
+});
+
 Route::prefix('/post')->group(function () {
     Route::get('/view', 'PostController@viewPost')->name('post.view');
     Route::get('/edit', 'PostController@editPost')->name('post.edit');
